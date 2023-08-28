@@ -19,18 +19,35 @@ export default function App() {
       <input
         type="text"
         {...register("nombre", {
-          required: true,
-          minLength: 2,
+          required: {
+            value: true,
+            message: "Nombre es requerido",
+          },
+          minLength: {
+            value: 2,
+            message: "Nombre debe tener más de 1 caracter",
+          },
           maxLength: 10,
         })}
       />
-      {errors.nombre?.type === "required" && <span>Nombre es requerido</span>}
-      {errors.nombre?.type === "minLength" && (
-        <span>Nombre debe tener más de 2 caracteres</span>
-      )}
+      {errors.nombre && <span>{errors.nombre.message}</span>}
+
       {/* correo */}
       <label htmlFor="correo">Correo</label>
-      <input type="email" {...register("correo")} />
+      <input
+        type="email"
+        {...register("correo", {
+          required: {
+            value: true,
+            message: "El correo es requerido",
+          },
+          pattern: {
+            value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+            message: "Correo no válido",
+          },
+        })}
+      />
+      {errors.correo && <span>{errors.correo.message}</span>}
 
       {/* password */}
       <label htmlFor="password">Password</label>
