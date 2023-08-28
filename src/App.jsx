@@ -1,7 +1,12 @@
 import { useForm } from "react-hook-form"
 
 export default function App() {
-  const { register, handleSubmit } = useForm()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm()
+  console.log(errors)
 
   const onSubmit = handleSubmit((data) => {
     console.log(data)
@@ -11,8 +16,18 @@ export default function App() {
     <form onSubmit={onSubmit}>
       {/* nombre */}
       <label htmlFor="nombre">Nombre</label>
-      <input type="text" {...register("nombre")} />
-
+      <input
+        type="text"
+        {...register("nombre", {
+          required: true,
+          minLength: 2,
+          maxLength: 10,
+        })}
+      />
+      {errors.nombre?.type === "required" && <span>Nombre es requerido</span>}
+      {errors.nombre?.type === "minLength" && (
+        <span>Nombre debe tener más de 2 caracteres</span>
+      )}
       {/* correo */}
       <label htmlFor="correo">Correo</label>
       <input type="email" {...register("correo")} />

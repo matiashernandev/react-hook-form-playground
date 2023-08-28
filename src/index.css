@@ -18,3 +18,9 @@ select {
   width: 100%;
   /* padding: 1px 2px; */
 }
+
+span {
+  display: block;
+  color: tomato;
+  font-size: x-small;
+}
