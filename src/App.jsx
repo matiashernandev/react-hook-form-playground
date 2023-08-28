@@ -5,6 +5,7 @@ export default function App() {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm()
   console.log(errors)
 
@@ -37,10 +38,6 @@ export default function App() {
       <input
         type="email"
         {...register("correo", {
-          required: {
-            value: true,
-            message: "El correo es requerido",
-          },
           pattern: {
             value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
             message: "Correo no válido",
@@ -51,11 +48,20 @@ export default function App() {
 
       {/* password */}
       <label htmlFor="password">Password</label>
-      <input type="email" {...register("password")} />
+      <input type="password" {...register("password")} />
 
       {/* confirmar password */}
       <label htmlFor="password">Confirmar password</label>
-      <input type="password" {...register("confirmarPassword")} />
+      <input
+        type="password"
+        {...register("confirmarPassword", {
+          validate: (value) =>
+            value === watch("password") || "Los passwords no coinciden",
+        })}
+      />
+      {errors.confirmarPassword && (
+        <span>{errors.confirmarPassword.message}</span>
+      )}
 
       {/* fecha de nacimiento */}
       <label htmlFor="fechaNacimiento">Fecha de nacimiento</label>
@@ -81,6 +87,13 @@ export default function App() {
         <option value="co">Colombia</option>
         <option value="ar">Argentina</option>
       </select>
+      {watch("pais") === "ar" && (
+        <input
+          type="text"
+          placeholder="Ingresa tu provincia"
+          {...register("provincia")}
+        />
+      )}
 
       {/* file */}
       <label htmlFor="foto">Foto de perfil</label>
@@ -91,6 +104,7 @@ export default function App() {
       <input type="checkbox" {...register("terminos")} />
 
       <button>Enviar</button>
+      <pre>{JSON.stringify(watch(), null, 2)}</pre>
     </form>
   )
 }
