@@ -6,7 +6,12 @@ export default function App() {
     handleSubmit,
     formState: { errors },
     watch,
-  } = useForm()
+    reset,
+  } = useForm({
+    defaultValues: {
+      terminos: true,
+    },
+  })
   console.log(errors)
 
   const onSubmit = handleSubmit((data) => {
@@ -104,6 +109,7 @@ export default function App() {
       <input type="checkbox" {...register("terminos")} />
 
       <button>Enviar</button>
+      <button onClick={() => reset()}>Resetear</button>
       <pre>{JSON.stringify(watch(), null, 2)}</pre>
     </form>
   )
