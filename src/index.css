@@ -1,0 +1,20 @@
+html {
+  color-scheme: dark;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+}
+
+label {
+  display: block;
+}
+
+input,
+select {
+  width: 100%;
+  /* padding: 1px 2px; */
+}
