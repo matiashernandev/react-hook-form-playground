@@ -59,7 +59,20 @@ export default function App() {
 
       {/* fecha de nacimiento */}
       <label htmlFor="fechaNacimiento">Fecha de nacimiento</label>
-      <input type="date" {...register("fechaNacimiento")} />
+      <input
+        type="date"
+        {...register("fechaNacimiento", {
+          validate: (value) => {
+            const fechaDeNacimiento = new Date(value)
+            const fechaActual = new Date()
+            const edad =
+              fechaActual.getFullYear() - fechaDeNacimiento.getFullYear()
+
+            return edad >= 18 || "Debes ser mayor de edad"
+          },
+        })}
+      />
+      {errors.fechaNacimiento && <span>{errors.fechaNacimiento.message}</span>}
 
       {/* pais */}
       <label htmlFor="pais">País</label>
